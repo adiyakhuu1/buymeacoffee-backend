@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model user {
+  id                String     @id @default(nanoid())
+  email             String     @unique
+  password          String
+  username          String     @unique
+  bankCard          bankCard?
+  recievedDonations donation[] @relation("recipent")
+  sendDonation      donation[] @relation("donor")
+  profile           profile?
+}
+
+model donation {
+  id                      String   @id @default(nanoid())
+  amount                  Int
+  specialMessage          String   @default("Thank you, good sir")
+  socialURLOrBuyMeACoffee String   @default("https://buymeacoffee.com/glpzghoo")
+  donorId                 String
+  recipentId              String
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @default(now())
+  donor                   user     @relation("donor", fields: [donorId], references: [id])
+  recipent                user     @relation("recipent", fields: [recipentId], references: [id])
+}
+
+model profile {
+  id              String  @id @default(nanoid())
+  name            String
+  about           String
+  avatarImage     String
+  socialMediaURL  String
+  backgroundImage String?
+  successMessage  String  @default("Thank you good sir")
+  userId          String  @unique
+  user            user    @relation(fields: [userId], references: [id])
+}
+
+model bankCard {
+  id         String   @id @default(nanoid())
+  country    String
+  firstName  String
+  lastName   String
+  cardNumber String
+  expiryDate DateTime
+  CVC        String
+  userId     String   @unique
+  user       user     @relation(fields: [userId], references: [id])
+}
+
+model otp {
+  id    String @id @default(nanoid())
+  opt   Int
+  email String
+}
