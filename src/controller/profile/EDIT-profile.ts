@@ -6,10 +6,10 @@ export const EditProfile = async (req: CustomRequest, res: Response) => {
   const body = req.body;
   const userId = req.userId;
   try {
-    if (body.id !== userId) {
-      res.json({ success: false, message: "ID didnt match!" });
-      return;
-    }
+    // if (body.id !== userId) {
+    //   res.json({ success: false, message: "ID didnt match!" });
+    //   return;
+    // }
     const editProfile = await prisma.profile.update({
       where: {
         userId,
@@ -25,17 +25,17 @@ export const EditProfile = async (req: CustomRequest, res: Response) => {
 
 export const updateCover = async (req: Request, res: Response) => {
   const { image } = req.body;
-  const { userId } = req.params;
+  const { id } = req.params;
   try {
     const user = await prisma.profile.findUnique({
       where: {
-        userId,
+        id,
       },
     });
     if (user) {
       const change = await prisma.profile.update({
         where: {
-          userId,
+          id,
         },
         data: {
           backgroundImage: image,

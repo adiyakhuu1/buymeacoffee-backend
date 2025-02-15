@@ -21,4 +21,4 @@ donationRouter.post(
 );
 
 // backend dashboard fetch endpoint (ene hesegt buh donation bolon amount days-eer filterdehed heregleh bolomjtoi)//
-donationRouter.get("/:userId", receivedDonation);
+donationRouter.get("/:id", receivedDonation);

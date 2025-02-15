@@ -8,7 +8,7 @@ import { EditProfile, updateCover } from "../controller/profile/EDIT-profile";
 export const profileRouter = Router();
 
 profileRouter.get("/explore", profileExplore);
-profileRouter.put("/updateCover/:userId", updateCover);
+profileRouter.put("/updateCover/:id", updateCover);
 
 profileRouter.put(`/update`, verifyToken, EditProfile);
 profileRouter.post(

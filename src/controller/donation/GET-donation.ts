@@ -3,7 +3,7 @@ import { prisma } from "../..";
 import { CustomRequest } from "../../router/usersRouter";
 
 export const receivedDonation = async (req: CustomRequest, res: Response) => {
-  const { userId } = req.params;
+  const { id } = req.params;
   const amount = req.query.amount;
   const days = req.query.days ? req.query.days : 7;
   const lte = new Date();
@@ -15,7 +15,7 @@ export const receivedDonation = async (req: CustomRequest, res: Response) => {
   try {
     const donation = await prisma.donation.findMany({
       where: {
-        AND: [{ recipentId: userId }, amount ? { amount: Number(amount) } : {}],
+        AND: [{ recipentId: id }, amount ? { amount: Number(amount) } : {}],
         createdAt: { gte, lte },
       },
     });
@@ -23,7 +23,7 @@ export const receivedDonation = async (req: CustomRequest, res: Response) => {
     const totalEarnings = await prisma.donation.aggregate({
       where: {
         AND: [
-          { recipentId: userId },
+          { recipentId: id },
           { createdAt: { gte, lte } },
           amount ? { amount: Number(amount) } : {},
         ],

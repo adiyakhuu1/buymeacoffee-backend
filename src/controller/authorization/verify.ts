@@ -10,14 +10,15 @@ export const verifyToken = async (
   next: NextFunction
 ) => {
   const accessToken = req.cookies.Authorization;
-  console.log("Cookie", req.cookies.Authorization);
-  console.log("Req", req.cookies);
+  const { id } = req.params;
   try {
     if (accessToken) {
       const verifyToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN);
       if (verifyToken) {
         req.userId = verifyToken.id;
         req.email = verifyToken.email;
+        req.owner = verifyToken.id === id;
+
         // console.log(verifyToken);
         next();
         return;
@@ -39,5 +40,38 @@ export const verifyToken = async (
       message: "no token provided",
       code: "NO_TOKEN_PROVIDED",
     });
+  }
+};
+export const verifyOwner = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const accessToken = req.cookies.Authorization;
+  const { id } = req.params;
+
+  try {
+    if (accessToken) {
+      const verifyToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN);
+      if (verifyToken) {
+        req.userId = verifyToken.id;
+        req.email = verifyToken.email;
+        req.owner = verifyToken.id === id;
+        next();
+        return;
+      }
+      req.owner = verifyToken.id === id;
+      next();
+      return;
+    }
+    req.owner = false;
+    next();
+
+    return;
+  } catch (e) {
+    console.error(e);
+    req.owner = false;
+
+    next();
   }
 };
