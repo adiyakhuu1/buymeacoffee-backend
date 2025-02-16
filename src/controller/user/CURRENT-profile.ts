@@ -30,7 +30,7 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
           );
           res.cookie("Authorization", accessToken, {
             httpOnly: true,
-            maxAge: 300000,
+            maxAge: 60 * 60 * 1000,
             sameSite: "strict",
             secure: true,
           });
@@ -93,10 +93,13 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
 // dashboard current profile (jwt method - do not touch)
 export const LoggedUserInfo = async (req: CustomRequest, res: Response) => {
   const userId = req.userId;
+  const queries = req.query;
+  console.log(queries);
 
-  const day30 = new Date(new Date().setDate(new Date().getDate() - 30));
-  const day60 = new Date(new Date().setDate(new Date().getDate() - 60));
-  const day90 = new Date(new Date().setDate(new Date().getDate() - 60));
+  const days = new Date(
+    new Date().setDate(new Date().getDate() - Number(queries.days)) || 20
+  );
+  console.log(queries.days);
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -111,47 +114,23 @@ export const LoggedUserInfo = async (req: CustomRequest, res: Response) => {
     const totalEarnings = user?.recievedDonations.reduce((acc, donor) => {
       return (acc += donor.amount);
     }, 0);
-    const day30data = await prisma.donation.findMany({
+    const DaysFilter = await prisma.donation.findMany({
       where: {
         recipentId: user?.id,
-        createdAt: { gte: day30 },
+        createdAt: { gte: days },
       },
       include: {
         donor: true,
       },
     });
-    const day60data = await prisma.donation.findMany({
-      where: {
-        recipentId: user?.id,
-        createdAt: { gte: day60 },
-      },
-      include: {
-        donor: true,
-      },
-    });
-    const day90data = await prisma.donation.findMany({
-      where: {
-        recipentId: user?.id,
-        createdAt: { gte: day90 },
-      },
-      include: {
-        donor: true,
-      },
-    });
-    const day30earnings = day30data.reduce((acc, amount) => {
-      return (acc += amount.amount);
-    }, 0);
-    const day60earnings = day60data.reduce((acc, amount) => {
-      return (acc += amount.amount);
-    }, 0);
-    const day90earnings = day60data.reduce((acc, amount) => {
+    const lastDaysEarnings = DaysFilter.reduce((acc, amount) => {
       return (acc += amount.amount);
     }, 0);
     res.json({
       user,
       success: true,
-      earningsData: { day30data, day60data, day90data },
-      earnings: { day30earnings, day60earnings, day90earnings },
+      earningsDataByDay: { DaysFilter },
+      totalEarningsByDay: { lastDaysEarnings },
     });
   } catch (e) {
     console.error("aldaa", e);

@@ -47,8 +47,17 @@ usersRouter.get(
           id: id,
         },
         include: {
-          recievedDonations: true,
+          recievedDonations: {
+            include: {
+              donor: {
+                include: {
+                  profile: true,
+                },
+              },
+            },
+          },
           profile: true,
+          sendDonation: true,
         },
       });
 

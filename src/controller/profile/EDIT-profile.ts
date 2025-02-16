@@ -6,10 +6,6 @@ export const EditProfile = async (req: CustomRequest, res: Response) => {
   const body = req.body;
   const userId = req.userId;
   try {
-    // if (body.id !== userId) {
-    //   res.json({ success: false, message: "ID didnt match!" });
-    //   return;
-    // }
     const editProfile = await prisma.profile.update({
       where: {
         userId,
