@@ -93,13 +93,13 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
 // dashboard current profile (jwt method - do not touch)
 export const LoggedUserInfo = async (req: CustomRequest, res: Response) => {
   const userId = req.userId;
-  const queries = req.query;
-  console.log(queries);
+  const { days, amount } = req.query;
+  console.log(days, amount);
 
-  const days = new Date(
-    new Date().setDate(new Date().getDate() - Number(queries.days)) || 20
+  const date = new Date(
+    new Date().setDate(new Date().getDate() - Number(days)) || 0
   );
-  console.log(queries.days);
+  console.log(days);
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -117,7 +117,8 @@ export const LoggedUserInfo = async (req: CustomRequest, res: Response) => {
     const DaysFilter = await prisma.donation.findMany({
       where: {
         recipentId: user?.id,
-        createdAt: { gte: days },
+        amount: { lte: Number(amount) || 10 },
+        createdAt: { gte: date },
       },
       include: {
         donor: true,
