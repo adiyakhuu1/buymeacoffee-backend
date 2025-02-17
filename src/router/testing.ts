@@ -27,13 +27,13 @@ LoggedUserRouter.get(
           req.userId = verifyToken.id;
           res
             .cookie("Authorization", NewAccessToken, {
-              sameSite: "strict",
+              sameSite: "none",
               secure: true,
               maxAge: 60 * 60 * 1000,
               httpOnly: true,
             })
             .cookie("RefreshToken", NewRefreshToken, {
-              sameSite: "strict",
+              sameSite: "none",
               secure: true,
               maxAge: 24 * 60 * 60 * 1000,
               httpOnly: true,
