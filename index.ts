@@ -46,12 +46,14 @@ app.get("/logout", async (req: Request, res: Response) => {
       sameSite: "none",
       secure: true,
       httpOnly: true,
+      domain: "bmc.glpzghoo.space",
     });
     res.cookie("RefreshToken", "", {
       maxAge: 0,
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      domain: "bmc.glpzghoo.space",
     });
     res.json({ success: true, message: "Successfully logged out!" });
   } catch (err) {
@@ -59,45 +61,6 @@ app.get("/logout", async (req: Request, res: Response) => {
   }
 });
 
-// refresh token - testing
-app.get("/", async (req: CustomRequest, res: Response) => {
-  const refreshToken = req.cookies.RefreshToken;
-  try {
-    if (!refreshToken) {
-      res.json({ success: false, code: "NO_TOKEN_PROVIDED" });
-      return;
-    }
-    const refresh = process.env.REFRESH_TOKEN;
-    if (refresh) {
-      const verify = jwt.verify(refreshToken, refresh) as { id: string };
-
-      if (verify) {
-        const user = await prisma.user.findUnique({
-          where: {
-            id: verify.id,
-          },
-        });
-        if (user) {
-          const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN!, {
-            expiresIn: "5m",
-          });
-          res.cookie("Authorization", accessToken, {
-            httpOnly: true,
-            sameSite: "none",
-            maxAge: 300000,
-            secure: true,
-          });
-          res.json({ success: true, code: "TOKEN_REFRESHED_SUCCESSFULLY" });
-          return;
-        }
-        res.json({ success: false, message: "User not found" });
-      }
-    }
-    res.json({ success: false, code: "NO_TOKEN_PROVIDED" });
-  } catch (e) {
-    console.error(e, "error");
-  }
-});
 // testing purposes
 
 // ene hesgiig bitgii oroldooroi hend ch hereggu heseg shvv//
