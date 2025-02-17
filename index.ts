@@ -12,13 +12,13 @@ import { LoggedUserRouter } from "./src/router/testing";
 import session from "express-session";
 import jwt from "jsonwebtoken";
 const app = express();
-
+const ORIGINS = [process.env.CORS_ORIGIN!, process.env.CORS_ORIGIN2!];
 const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: ORIGINS,
     credentials: true,
   })
 );
