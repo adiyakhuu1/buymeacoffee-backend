@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../..";
+import { prisma } from "../../..";
 import bcrypt from "bcrypt";
 import { configDotenv } from "dotenv";
 import { CustomRequest } from "../../router/usersRouter";

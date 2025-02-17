@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { prisma } from "../..";
+import { prisma } from "../../..";
 import { CustomRequest } from "../../router/usersRouter";
 
 export const receivedDonation = async (req: CustomRequest, res: Response) => {

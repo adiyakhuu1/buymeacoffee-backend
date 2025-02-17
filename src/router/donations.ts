@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import { receivedDonation } from "../controller/donation/GET-donation";
 import { CustomRequest } from "./usersRouter";
-import { prisma } from "..";
+import { prisma } from "../..";
 import { verifyToken } from "../controller/authorization/verify";
 
 export const donationRouter = Router();

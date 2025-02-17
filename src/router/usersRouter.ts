@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { loginUser } from "../controller/user/CURRENT-profile";
 import { createUser } from "../controller/user/CREATE-account";
 import nodemailer from "nodemailer";
-import { prisma } from "..";
+import { prisma } from "../..";
 import bcrypt from "bcrypt";
 import { verifyOwner, verifyToken } from "../controller/authorization/verify";
 import { checkUsername } from "../controller/user/CHECK-username";

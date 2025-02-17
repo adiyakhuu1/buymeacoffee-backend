@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { prisma } from "../..";
+import { prisma } from "../../..";
 import { CustomRequest } from "../../router/usersRouter";
 export const checkUsername = async (req: CustomRequest, res: Response) => {
   const { username } = req.params;

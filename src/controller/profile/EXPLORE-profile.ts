@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../..";
+import { prisma } from "../../..";
 import { CustomRequest } from "../../router/usersRouter";
 
 export const profileExplore = async (req: CustomRequest, res: Response) => {

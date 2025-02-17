@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { prisma } from "../..";
+import { prisma } from "../../..";
 import bcrypt from "bcrypt";
 import { CustomRequest } from "../../router/usersRouter";
 const jwt = require("jsonwebtoken");
