@@ -43,7 +43,7 @@ app.get("/logout", async (req: Request, res: Response) => {
   try {
     res.cookie("Authorization", "", {
       maxAge: 0,
-      sameSite: "strict",
+      sameSite: "none",
       secure: true,
       httpOnly: true,
     });
@@ -51,7 +51,7 @@ app.get("/logout", async (req: Request, res: Response) => {
       maxAge: 0,
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
     });
     res.json({ success: true, message: "Successfully logged out!" });
   } catch (err) {
@@ -83,7 +83,7 @@ app.get("/", async (req: CustomRequest, res: Response) => {
           });
           res.cookie("Authorization", accessToken, {
             httpOnly: true,
-            sameSite: "strict",
+            sameSite: "none",
             maxAge: 300000,
             secure: true,
           });
