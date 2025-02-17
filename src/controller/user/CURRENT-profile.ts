@@ -33,7 +33,7 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
             maxAge: 60 * 60 * 1000,
             sameSite: "none",
             secure: true,
-            domain: ".glpzghoo.space", // https://bmc.glpzghoo.space/ my domain
+            domain: ".glpzghoo.space",
           });
           res.cookie("RefreshToken", refreshToken, {
             httpOnly: true,
