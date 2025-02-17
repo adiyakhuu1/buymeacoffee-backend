@@ -39,11 +39,30 @@ app.use("/donation", donationRouter);
 
 // Logged user info - do not touch
 app.use("/dashbordInfo", LoggedUserRouter);
+// Logout
+app.get("/logout", async (req: Request, res: Response) => {
+  try {
+    res.cookie("Authorization", "", {
+      maxAge: 0,
+      sameSite: "strict",
+      secure: true,
+      httpOnly: true,
+    });
+    res.cookie("RefreshToken", "", {
+      maxAge: 0,
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+    res.json({ success: true, message: "Successfully logged out!" });
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 // refresh token - testing
 app.get("/", async (req: CustomRequest, res: Response) => {
   const refreshToken = req.cookies.RefreshToken;
-  console.log(refreshToken);
   try {
     if (!refreshToken) {
       res.json({ success: false, code: "NO_TOKEN_PROVIDED" });
@@ -70,7 +89,6 @@ app.get("/", async (req: CustomRequest, res: Response) => {
             secure: true,
           });
           res.json({ success: true, code: "TOKEN_REFRESHED_SUCCESSFULLY" });
-          console.log(accessToken);
           return;
         }
         res.json({ success: false, message: "User not found" });

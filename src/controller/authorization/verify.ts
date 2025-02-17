@@ -19,7 +19,6 @@ export const verifyToken = async (
         req.email = verifyToken.email;
         req.owner = verifyToken.id === id;
 
-        // console.log(verifyToken);
         next();
         return;
       }

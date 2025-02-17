@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { prisma } from "../../..";
 import { CustomRequest } from "../../router/usersRouter";
 export const editBankCard = async (req: CustomRequest, res: Response) => {
-  const { id } = req.params;
+  const id = req.userId;
   const { country, firstName, lastName, cardNumber, expiryDate } = req.body;
 
   try {

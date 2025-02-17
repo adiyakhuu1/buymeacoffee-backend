@@ -5,7 +5,6 @@ import { CustomRequest } from "../../router/usersRouter";
 export const createBankCard = async (req: CustomRequest, res: Response) => {
   const { userId } = req;
   const body = req.body;
-  console.log(body);
   try {
     const newCard = await prisma.bankCard.create({
       data: {

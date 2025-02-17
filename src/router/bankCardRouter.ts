@@ -14,4 +14,4 @@ bankCardRouter.post("/", verifyToken, createBankCard);
 bankCardRouter.get("/", fetchBankCard);
 
 // banknii cardniihaa medeelliig oorchloh endpoint
-bankCardRouter.put("/:id", editBankCard);
+bankCardRouter.put("/", verifyToken, editBankCard);

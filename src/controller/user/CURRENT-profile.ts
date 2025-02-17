@@ -46,7 +46,6 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
             profileSetup: true,
             data: { id: existingUser.id },
           });
-          console.log(accessToken);
           return;
         }
         const accessToken = jwt.sign(existingUser, process.env.ACCESS_TOKEN, {
@@ -94,12 +93,10 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
 export const LoggedUserInfo = async (req: CustomRequest, res: Response) => {
   const userId = req.userId;
   const { days, amount } = req.query;
-  console.log(days, amount);
 
   const date = new Date(
     new Date().setDate(new Date().getDate() - Number(days)) || 0
   );
-  console.log(days);
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -109,6 +106,7 @@ export const LoggedUserInfo = async (req: CustomRequest, res: Response) => {
         recievedDonations: true,
         sendDonation: true,
         profile: true,
+        bankCard: true,
       },
     });
     const totalEarnings = user?.recievedDonations.reduce((acc, donor) => {

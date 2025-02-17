@@ -19,26 +19,25 @@ export const EditProfile = async (req: CustomRequest, res: Response) => {
   }
 };
 
-export const updateCover = async (req: Request, res: Response) => {
+export const updateCover = async (req: CustomRequest, res: Response) => {
   const { image } = req.body;
-  const { id } = req.params;
+  const id = req.userId;
   try {
     const user = await prisma.profile.findUnique({
       where: {
-        id,
+        userId: id,
       },
     });
     if (user) {
       const change = await prisma.profile.update({
         where: {
-          id,
+          userId: id,
         },
         data: {
           backgroundImage: image,
         },
       });
       res.json({ message: "success" });
-      console.log(change);
     }
   } catch (e) {
     console.error(e, "aldaa");

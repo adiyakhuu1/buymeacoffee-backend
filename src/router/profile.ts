@@ -8,9 +8,34 @@ import { EditProfile, updateCover } from "../controller/profile/EDIT-profile";
 export const profileRouter = Router();
 
 profileRouter.get("/explore", profileExplore);
-profileRouter.put("/updateCover/:id", updateCover);
+profileRouter.put("/updateCover/", verifyToken, updateCover);
 
 profileRouter.put(`/update`, verifyToken, EditProfile);
+profileRouter.put(
+  `/update/successMessage`,
+  verifyToken,
+  async (req: CustomRequest, res: Response) => {
+    const body = req.body;
+    const id = req.userId;
+    try {
+      // const user = await prisma.profile.findUnique({
+      //   where:{
+      //     userId: id
+      //   }
+      // })
+      const updatedProfile = await prisma.profile.update({
+        where: {
+          userId: id,
+        },
+        data: body,
+      });
+      res.json({ success: true, message: "success", data: { updatedProfile } });
+    } catch (ee) {
+      console.error(ee, "aaaaa");
+      res.json({ success: false, message: "failed", data: null });
+    }
+  }
+);
 profileRouter.post(
   "/",
   verifyToken,

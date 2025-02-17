@@ -21,7 +21,6 @@ export const createUser = async (req: CustomRequest, res: Response) => {
       return;
     }
     const rounds = process.env.SALT;
-    console.log(rounds);
     const encryptedPass = await bcrypt.hash(password, Number(rounds));
     const newUser = await prisma.user.create({
       data: { email, password: encryptedPass, username },

@@ -95,7 +95,6 @@ export const OTPcheck1 = async (req: CustomRequest, res: Response) => {
 // used jwt to update password
 export const updatepassword = async (req: CustomRequest, res: Response) => {
   const { otp, id, password } = req.body;
-  console.log(req.body);
   const userid = req.userId;
   const email = req.email;
   try {
@@ -104,7 +103,6 @@ export const updatepassword = async (req: CustomRequest, res: Response) => {
         id,
       },
     });
-    console.log(user);
     if (user) {
       if (user.opt === Number(otp) && user.email === email) {
         const hashedPass = await bcrypt.hash(
@@ -120,7 +118,7 @@ export const updatepassword = async (req: CustomRequest, res: Response) => {
           },
         });
         res.json({
-          message: "OTP MATCHED",
+          message: "Password Changed Successfully",
           success: true,
           code: "PASS_CHANGED_SUCCESSFULLY",
         });
