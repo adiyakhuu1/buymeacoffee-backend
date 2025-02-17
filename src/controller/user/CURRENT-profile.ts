@@ -61,12 +61,14 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
           httpOnly: true,
           secure: true,
           sameSite: "none",
+          domain: ".glpzghoo.space",
         });
         res.cookie("RefreshToken", refreshToken, {
           httpOnly: true,
           maxAge: 4 * 60 * 60 * 1000,
           sameSite: "strict",
           secure: true,
+          domain: ".glpzghoo.space",
         });
         res.json({
           message: "Welcome back",
