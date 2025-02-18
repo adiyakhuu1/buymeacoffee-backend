@@ -27,14 +27,14 @@ LoggedUserRouter.get(
           req.userId = verifyToken.id;
           res
             .cookie("accessToken", NewAccessToken, {
-              sameSite: "none",
+              sameSite: "strict",
               secure: true,
               maxAge: 60 * 60 * 1000,
               httpOnly: true,
               domain: ".glpzghoo.space",
             })
             .cookie("RefreshToken", NewRefreshToken, {
-              sameSite: "none",
+              sameSite: "strict",
               secure: true,
               maxAge: 24 * 60 * 60 * 1000,
               httpOnly: true,

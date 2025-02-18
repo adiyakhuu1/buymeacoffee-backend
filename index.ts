@@ -44,7 +44,7 @@ app.get("/logout", async (req: Request, res: Response) => {
   try {
     res.cookie("accessToken", "", {
       maxAge: 0,
-      sameSite: "none",
+      sameSite: "strict",
       secure: true,
       httpOnly: true,
       domain: ".glpzghoo.space",
@@ -53,7 +53,7 @@ app.get("/logout", async (req: Request, res: Response) => {
       maxAge: 0,
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "strict",
       domain: ".glpzghoo.space",
     });
     res.json({ success: true, message: "Successfully logged out!" });

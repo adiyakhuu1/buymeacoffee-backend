@@ -31,14 +31,14 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
           res.cookie("accessToken", accessToken, {
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
-            sameSite: "none",
+            sameSite: "strict",
             secure: true,
             domain: ".glpzghoo.space",
           });
           res.cookie("RefreshToken", refreshToken, {
             httpOnly: true,
             maxAge: 4 * 60 * 60 * 1000,
-            sameSite: "none",
+            sameSite: "strict",
             secure: true,
             domain: ".glpzghoo.space",
           });
@@ -60,13 +60,13 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
           maxAge: 1 * 60 * 60 * 1000,
           httpOnly: true,
           secure: true,
-          sameSite: "none",
+          sameSite: "strict",
           domain: ".glpzghoo.space",
         });
         res.cookie("RefreshToken", refreshToken, {
           httpOnly: true,
           maxAge: 4 * 60 * 60 * 1000,
-          sameSite: "none",
+          sameSite: "strict",
           secure: true,
           domain: ".glpzghoo.space",
         });
