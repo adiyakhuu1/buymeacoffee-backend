@@ -9,7 +9,7 @@ export const verifyToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  const accessToken = req.cookies.Authorization;
+  const accessToken = req.cookies.accessToken;
   const { id } = req.params;
   try {
     if (accessToken) {
@@ -46,7 +46,7 @@ export const verifyOwner = async (
   res: Response,
   next: NextFunction
 ) => {
-  const accessToken = req.cookies.Authorization;
+  const accessToken = req.cookies.accessToken;
   const { id } = req.params;
 
   try {
