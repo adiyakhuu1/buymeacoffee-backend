@@ -28,7 +28,7 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
               expiresIn: "4h",
             }
           );
-          res.cookie("Authorization", accessToken, {
+          res.cookie("accessToken", accessToken, {
             httpOnly: true,
             maxAge: 60 * 60 * 1000,
             sameSite: "none",
@@ -54,7 +54,7 @@ export const loginUser = async (req: CustomRequest, res: Response) => {
         const refreshToken = jwt.sign(existingUser, process.env.REFRESH_TOKEN, {
           expiresIn: "4h",
         });
-        res.cookie("Authorization", accessToken, {
+        res.cookie("accessToken", accessToken, {
           maxAge: 1 * 60 * 60 * 1000,
           httpOnly: true,
           secure: true,

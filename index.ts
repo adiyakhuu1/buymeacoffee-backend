@@ -42,7 +42,7 @@ app.use("/dashbordInfo", LoggedUserRouter);
 // Logout
 app.get("/logout", async (req: Request, res: Response) => {
   try {
-    res.cookie("Authorization", "", {
+    res.cookie("accessToken", "", {
       maxAge: 0,
       sameSite: "none",
       secure: true,

@@ -26,7 +26,7 @@ LoggedUserRouter.get(
           );
           req.userId = verifyToken.id;
           res
-            .cookie("Authorization", NewAccessToken, {
+            .cookie("accessToken", NewAccessToken, {
               sameSite: "none",
               secure: true,
               maxAge: 60 * 60 * 1000,
