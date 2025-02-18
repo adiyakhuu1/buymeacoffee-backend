@@ -31,12 +31,14 @@ LoggedUserRouter.get(
               secure: true,
               maxAge: 60 * 60 * 1000,
               httpOnly: true,
+              domain: ".glpzghoo.space",
             })
             .cookie("RefreshToken", NewRefreshToken, {
               sameSite: "none",
               secure: true,
               maxAge: 24 * 60 * 60 * 1000,
               httpOnly: true,
+              domain: ".glpzghoo.space",
             });
           next();
           return;
