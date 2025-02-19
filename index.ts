@@ -24,6 +24,10 @@ app.use(
 );
 
 export const prisma = new PrismaClient();
+// Welcome
+app.get("/", (req: Request, res: Response) => {
+  res.send("Have a good day!");
+});
 
 // bank card backend endpoint ///
 app.use("/bank-card", bankCardRouter);
